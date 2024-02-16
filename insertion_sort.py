@@ -6,4 +6,3 @@ def sort(input):
             input[j + 1] = input[j]
             j -= 1
         input[j + 1] = key
-    return input
