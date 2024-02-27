@@ -1,7 +1,9 @@
 import time
+import csv
 from enum import Enum
 from random import randint
 
+import insertion_sort
 
 class Ordering(Enum):
     Unsorted = 1
@@ -31,6 +33,16 @@ def generate_list(ordering, length):
 
 
 if __name__ == "__main__":
-    l = generate_list(Ordering.Unsorted, 100000)
-    print(l)
+    sizes = [500, 2500, 10000, 20000, 30000]
+    orderings = [Ordering.Unsorted, Ordering.Sorted, Ordering.RevSorted]
+
+    with open("isort.csv", mode="w") as isort_csv: 
+        writer = csv.writer(isort_csv, delimiter=",")
+        writer.writerow(["List Size", "Unsorted", "Sorted", "Reverse Sorted"])
+        for size in sizes:
+            times = []
+            for ordering in orderings:
+                times.append(benchmark(insertion_sort.sort, generate_list(ordering, size)))    
+            writer.writerow([size] + times)
+
     
